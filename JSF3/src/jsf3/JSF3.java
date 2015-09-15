@@ -18,5 +18,4 @@ public class JSF3 {
         //System.out.println(System.getenv("TestEnviron"));
         System.out.println("Kankertyfusteringzooi");
     }
-    
 }
