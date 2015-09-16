@@ -5,6 +5,10 @@
  */
 package jsf3;
 
+import java.io.*;
+import java.util.*;
+import java.util.logging.*;
+
 /**
  *
  * @author Joris
@@ -15,7 +19,73 @@ public class JSF3 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //System.out.println(System.getenv("TestEnviron"));
-        System.out.println("Kankertyfusteringzooi");
+//------------------------------------------------------------------------------        
+//        Properties props = new Properties();
+//        String key = "";
+//        String value = "";
+//
+//        for (String s : System.getenv().keySet()) {
+//            if (s.equals("TestEnviron")) {
+//                key = s;
+//                value = System.getenv(key);
+//            }
+//        }
+//        
+//        System.out.println(key + "=" + value);
+//        
+//        props.put(key, value);
+//
+//        try {
+//            FileOutputStream out = new FileOutputStream("/home/jsf3/NetBeansProjects/JSF3Repo/appProperties");
+//            props.store(out, "NoComment");
+//            out.close();
+//        } catch (FileNotFoundException fnfe) {
+//            Logger.getLogger(JSF3.class.getName()).log(Level.SEVERE, null, fnfe);
+//        } catch (IOException ioe) {
+//            Logger.getLogger(JSF3.class.getName()).log(Level.SEVERE, null, ioe);
+//        }
+//        
+//------------------------------------------------------------------------------   
+//        
+//        Properties props = new Properties();
+//        
+//        try {
+//            FileInputStream in = new FileInputStream("/home/jsf3/NetBeansProjects/JSF3Repo/appProperties");
+//            props.load(in);
+//            in.close();
+//        } catch (FileNotFoundException fnfe) {
+//            Logger.getLogger(JSF3.class.getName()).log(Level.SEVERE, null, fnfe);
+//        } catch (IOException ioe) {
+//            Logger.getLogger(JSF3.class.getName()).log(Level.SEVERE, null, ioe);
+//        }
+//
+//        for (Object key : props.keySet().toArray()) {
+//            System.out.println(key + "=" + props.getProperty(key.toString()));
+//        }
+//        
+//------------------------------------------------------------------------------   
+//
+        if (args.length == 4) {
+            Properties props = new Properties();
+
+            props.put(args[0], args[1]);
+            props.put(args[2], args[3]);
+
+            try {
+                FileInputStream in = new FileInputStream("/home/jsf3/NetBeansProjects/JSF3Repo/appProperties");
+                props.load(in);
+                in.close();
+            } catch (FileNotFoundException fnfe) {
+                Logger.getLogger(JSF3.class.getName()).log(Level.SEVERE, null, fnfe);
+            } catch (IOException ioe) {
+                Logger.getLogger(JSF3.class.getName()).log(Level.SEVERE, null, ioe);
+            }
+
+            for (Object key : props.keySet().toArray()) {
+                System.out.println(key + "=" + props.getProperty(key.toString()));
+            }
+        } else {
+            System.out.println("Vul 4 argumenten in dit format in : <prop1> <val1> <prop2> <val2>.");
+        }
     }
 }
