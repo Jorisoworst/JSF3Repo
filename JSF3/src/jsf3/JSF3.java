@@ -65,11 +65,13 @@ public class JSF3 {
 //        
 //------------------------------------------------------------------------------   
 //
-        if (args.length == 4) {
+        if (args.length % 2 == 0) {
             Properties props = new Properties();
 
-            props.put(args[0], args[1]);
-            props.put(args[2], args[3]);
+            for (int i = 0; i < args.length; i += 2)
+            {
+                props.put(args[i], args[i + 1]);
+            }
 
             try {
                 FileInputStream in = new FileInputStream("/home/jsf3/NetBeansProjects/JSF3Repo/appProperties");
@@ -85,7 +87,7 @@ public class JSF3 {
                 System.out.println(key + "=" + props.getProperty(key.toString()));
             }
         } else {
-            System.out.println("Vul 4 argumenten in dit format in : <prop1> <val1> <prop2> <val2>.");
+            System.out.println("Vul de argumenten in dit format in : <propN> <valN>.");
         }
     }
 }
