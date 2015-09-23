@@ -20,6 +20,7 @@ public class JSF3 {
      */
     public static void main(String[] args) {
 //------------------------------------------------------------------------------        
+//
 //        Properties props = new Properties();
 //        String key = "";
 //        String value = "";
@@ -30,9 +31,9 @@ public class JSF3 {
 //                value = System.getenv(key);
 //            }
 //        }
-//        
+//
 //        System.out.println(key + "=" + value);
-//        
+//
 //        props.put(key, value);
 //
 //        try {
@@ -44,11 +45,10 @@ public class JSF3 {
 //        } catch (IOException ioe) {
 //            Logger.getLogger(JSF3.class.getName()).log(Level.SEVERE, null, ioe);
 //        }
-//        
+//
 //------------------------------------------------------------------------------   
-//        
+//
 //        Properties props = new Properties();
-//        
 //        try {
 //            FileInputStream in = new FileInputStream("/home/jsf3/NetBeansProjects/JSF3Repo/appProperties");
 //            props.load(in);
@@ -62,14 +62,13 @@ public class JSF3 {
 //        for (Object key : props.keySet().toArray()) {
 //            System.out.println(key + "=" + props.getProperty(key.toString()));
 //        }
-//        
-//------------------------------------------------------------------------------   
+//
+//------------------------------------------------------------------------------
 //
         if (args.length % 2 == 0) {
             Properties props = new Properties();
 
-            for (int i = 0; i < args.length; i += 2)
-            {
+            for (int i = 0; i < args.length; i += 2) {
                 props.put(args[i], args[i + 1]);
             }
 
