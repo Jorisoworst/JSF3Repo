@@ -5,13 +5,8 @@
  */
 package runtime;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import timeutil.TimeStamp;
 
 /**
  *
@@ -90,44 +85,64 @@ public class JSF31_w03_OS_Runtime {
 //        } catch (IOException ioe) {
 //            Logger.getLogger(JSF31_w03_OS_Runtime.class.getName()).log(Level.SEVERE, null, ioe);
 //        }
-//--------Opdracht 9-------------------------------------------------------
+//--------Opdracht 9 en 10------------------------------------------------------
+//        if (args.length % 2 == 0 || args.length == 1) {
+//            TimeStamp ts = new TimeStamp();
+//            ts.setBegin("Begin van de code");
+//            Runtime r = Runtime.getRuntime();
+//
+//            try {
+//                for (int i = 0; i < args.length; i += 2) {
+//                    ProcessBuilder pb = new ProcessBuilder();
+//
+//                    if (args.length == 1 || args[i + 1].isEmpty()) {
+//                        pb.command(args[i]);
+//                    } else {
+//                        pb.command(args[i], args[i + 1]);
+//                    }
+//
+//                    Process p = pb.start();
+//                    System.out.println(pb.command() + " started");
+//                    InputStream is = p.getInputStream();
+//                    InputStreamReader isr = new InputStreamReader(is);
+//                    BufferedReader br = new BufferedReader(isr);
+//
+//                    String line;
+//
+//                    while ((line = br.readLine()) != null) {
+//                        System.out.println(line);
+//                    }
+//
+//                    br.close();
+//                    p.destroy();
+//                    System.out.println(pb.command() + " ended");
+//                }
+//            } catch (IOException ioe) {
+//                Logger.getLogger(JSF31_w03_OS_Runtime.class.getName()).log(Level.SEVERE, null, ioe);
+//            }
+//
+//            ts.setEnd("Einde van de code");
+//            System.out.print(ts.toString());
+//        }
+//--------Opdracht 11-----------------------------------------------------------
         if (args.length % 2 == 0 || args.length == 1) {
-            TimeStamp ts = new TimeStamp();
-            ts.setBegin("Begin van de code");
-            Runtime r = Runtime.getRuntime();
+            for (int i = 0; i < args.length; i += 2) {
+                Thread t;
 
-            try {
-                for (int i = 0; i < args.length; i += 2) {
-                    ProcessBuilder pb = new ProcessBuilder();
-
-                    if (args.length == 1 || args[i + 1].isEmpty()) {
-                        pb.command(args[i]);
-                    } else {
-                        pb.command(args[i], args[i + 1]);
-                    }
-
-                    Process p = pb.start();
-                    System.out.println(pb.command() + " started");
-                    InputStream is = p.getInputStream();
-                    InputStreamReader isr = new InputStreamReader(is);
-                    BufferedReader br = new BufferedReader(isr);
-
-                    String line;
-
-                    while ((line = br.readLine()) != null) {
-                        System.out.println(line);
-                    }
-
-                    br.close();
-                    p.destroy();
-                    System.out.println(pb.command() + " ended");
+                if (args.length == 1 || args[i + 1].isEmpty()) {
+                    t = new Thread(new MyRunnable(args[i], ""));
+                } else {
+                    t = new Thread(new MyRunnable(args[i], args[i + 1]));
                 }
-            } catch (IOException ioe) {
-                Logger.getLogger(JSF31_w03_OS_Runtime.class.getName()).log(Level.SEVERE, null, ioe);
+
+                t.start();
             }
 
-            ts.setEnd("Einde van de code");
-            System.out.print(ts.toString());
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(JSF31_w03_OS_Runtime.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }
