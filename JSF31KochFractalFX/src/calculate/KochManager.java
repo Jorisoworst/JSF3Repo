@@ -5,23 +5,64 @@
  */
 package calculate;
 
+import java.util.*;
 import jsf31kochfractalfx.JSF31KochFractalFX;
+import timeutil.TimeStamp;
 
 /**
  *
  * @author Joris
  */
-public class KochManager {
+public class KochManager implements Observer {
 
-    public KochManager(JSF31KochFractalFX aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private JSF31KochFractalFX application;
+    private KochFractal koch;
+    private ArrayList<Edge> edges;
+
+    public KochManager(JSF31KochFractalFX application) {
+        this.application = application;
+        this.koch = new KochFractal();
+        this.koch.addObserver(this);
+        this.edges = new ArrayList<>();
     }
 
-    public void changeLevel(int currentLevel) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void changeLevel(int nxt) {
+        this.koch.setLevel(nxt);
+        this.edges.clear();
+
+        TimeStamp ts = new TimeStamp();
+
+        ts.setBegin("Begin van de generate methodes");
+
+        this.koch.generateLeftEdge();
+        this.koch.generateBottomEdge();
+        this.koch.generateRightEdge();
+
+        ts.setEnd("Einde van de generate methodes");
+
+        this.drawEdges();
+        this.application.setTextCalc(ts.toString());
+        this.application.setTextNrEdges("" + this.koch.getNrOfEdges());
     }
 
     public void drawEdges() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.application.clearKochPanel();
+
+        TimeStamp ts = new TimeStamp();
+
+        ts.setBegin("Begin van de for-loop");
+
+        for (Edge e : this.edges) {
+            this.application.drawEdge(e);
+        }
+
+        ts.setEnd("Einde van de for-loop");
+
+        this.application.setTextDraw(ts.toString());
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        this.edges.add((Edge) arg);
     }
 }
