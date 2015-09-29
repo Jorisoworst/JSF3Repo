@@ -22,7 +22,7 @@ public class JSF31_w03_OS_Runtime {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//------------------------------------------------------------------------------
+//--------Opdracht 3 en 4-------------------------------------------------------
 //      
 //        Runtime r = Runtime.getRuntime();
 //        System.out.println("3a. Beschikbare processoren: " + r.availableProcessors());
@@ -33,8 +33,7 @@ public class JSF31_w03_OS_Runtime {
 //        
 //        String s;
 //        
-//        for (int i = 0; i < 100000; i++)
-//        {
+//        for (int i = 0; i < 100000; i++) {
 //            s = "Hello" + i;
 //        }
 //        
@@ -42,7 +41,7 @@ public class JSF31_w03_OS_Runtime {
 //        System.gc();
 //        System.out.println("4. Gebruikte geheugen na de Garbage Collector: " + (r.totalMemory() - r.freeMemory()));
 //
-//------------------------------------------------------------------------------
+//--------Opdracht 5------------------------------------------------------------
 //
 //        Runtime r = Runtime.getRuntime();
 //        
@@ -61,7 +60,7 @@ public class JSF31_w03_OS_Runtime {
 //            Logger.getLogger(JSF31_w03_OS_Runtime.class.getName()).log(Level.SEVERE, null, ie);
 //        }
 //
-//------------------------------------------------------------------------------
+//--------Opdracht 6------------------------------------------------------------
 //
         try {
             ProcessBuilder pb = new ProcessBuilder();
@@ -70,14 +69,13 @@ public class JSF31_w03_OS_Runtime {
             InputStream is = p.getInputStream();
             InputStreamReader isr = new InputStreamReader(is);
             BufferedReader br = new BufferedReader(isr);
-            
+
             String line;
-            
-            while ((line = br.readLine()) != null)
-            {
+
+            while ((line = br.readLine()) != null) {
                 System.out.println(line);
             }
-            
+
             br.close();
         } catch (IOException ioe) {
             Logger.getLogger(JSF31_w03_OS_Runtime.class.getName()).log(Level.SEVERE, null, ioe);
