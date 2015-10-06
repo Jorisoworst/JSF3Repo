@@ -14,10 +14,11 @@ import java.util.Observer;
  */
 public class MyRunnable implements Runnable, Observer {
 
-    private KochManager km;
-    private KochFractal kf;
-    private String type;
+    private final KochManager km;
+    private final KochFractal kf;
+    private final String type;
 
+    @SuppressWarnings("LeakingThisInConstructor")
     public MyRunnable(KochManager km, KochFractal kf, String type) {
         this.km = km;
         this.kf = kf;

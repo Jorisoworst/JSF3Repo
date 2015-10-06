@@ -15,12 +15,12 @@ import timeutil.TimeStamp;
  */
 public class KochManager /*implements Observer*/ {
 
-    private JSF31KochFractalFX application;
-    private KochFractal koch;
-    private ArrayList<Edge> edges;
+    private final JSF31KochFractalFX application;
+    private final KochFractal koch;
+    private final ArrayList<Edge> edges;
     private TimeStamp generationTime;
     private Thread leftThread, bottomThread, rightThread;
-    private MyRunnable leftRunnable, bottomRunnable, rightRunnable;
+    private final MyRunnable leftRunnable, bottomRunnable, rightRunnable;
     private int count;
 
     public KochManager(JSF31KochFractalFX application) {
