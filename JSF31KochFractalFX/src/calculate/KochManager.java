@@ -13,36 +13,52 @@ import timeutil.TimeStamp;
  *
  * @author Joris
  */
-public class KochManager implements Observer {
+public class KochManager /*implements Observer*/ {
 
     private JSF31KochFractalFX application;
     private KochFractal koch;
     private ArrayList<Edge> edges;
+    private TimeStamp generationTime;
+    private Thread leftThread, bottomThread, rightThread;
+    private MyRunnable leftRunnable, bottomRunnable, rightRunnable;
+    private int count;
 
     public KochManager(JSF31KochFractalFX application) {
         this.application = application;
         this.koch = new KochFractal();
-        this.koch.addObserver(this);
+//        this.koch.addObserver(this);
         this.edges = new ArrayList<>();
+        this.leftRunnable = new MyRunnable(this, this.koch, "L");
+        this.bottomRunnable = new MyRunnable(this, this.koch, "B");
+        this.rightRunnable = new MyRunnable(this, this.koch, "R");
+        this.count = 0;
     }
 
     public void changeLevel(int nxt) {
         this.koch.setLevel(nxt);
         this.edges.clear();
 
-        TimeStamp ts = new TimeStamp();
+        this.generationTime = new TimeStamp();
 
-        ts.setBegin("Begin van de generate methodes");
+        this.generationTime.setBegin("Generation Start");
 
-        this.koch.generateLeftEdge();
-        this.koch.generateBottomEdge();
-        this.koch.generateRightEdge();
+        this.leftThread = new Thread(this.leftRunnable);
+        this.bottomThread = new Thread(this.bottomRunnable);
+        this.rightThread = new Thread(this.rightRunnable);
 
-        ts.setEnd("Einde van de generate methodes");
+        this.leftThread.start();
+        this.bottomThread.start();
+        this.rightThread.start();
 
-        this.drawEdges();
-        this.application.setTextCalc(ts.toString());
-        this.application.setTextNrEdges("" + this.koch.getNrOfEdges());
+//        this.koch.generateLeftEdge();
+//        this.koch.generateBottomEdge();
+//        this.koch.generateRightEdge();
+//        
+//        this.generationTime.setEnd("Einde van de generate methodes");
+//
+//        this.drawEdges();
+//        this.application.setTextCalc(this.generationTime.toString());
+//        this.application.setTextNrEdges("" + this.koch.getNrOfEdges());
     }
 
     public void drawEdges() {
@@ -50,19 +66,35 @@ public class KochManager implements Observer {
 
         TimeStamp ts = new TimeStamp();
 
-        ts.setBegin("Begin van de for-loop");
+        ts.setBegin("Draw Start");
 
         for (Edge e : this.edges) {
             this.application.drawEdge(e);
         }
 
-        ts.setEnd("Einde van de for-loop");
+        ts.setEnd("Draw End");
 
         this.application.setTextDraw(ts.toString());
+        this.application.setTextCalc(this.generationTime.toString());
+        this.application.setTextNrEdges("" + this.koch.getNrOfEdges());
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        this.edges.add((Edge) arg);
+//    @Override
+//    public void update(Observable o, Object arg) {
+//        this.edges.add((Edge) arg);
+//    }
+//    
+    public synchronized void addEdge(Edge e) {
+        this.edges.add(e);
+    }
+
+    public synchronized void incrementCount() {
+        this.count++;
+
+        if (this.count >= 3) {
+            this.generationTime.setEnd("Generation End");
+            this.application.requestDrawEdges();
+            this.count = 0;
+        }
     }
 }
