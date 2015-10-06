@@ -45,7 +45,7 @@ public class MyRunnable implements Runnable, Observer {
                 break;
             }
         }
-        
+
         this.km.incrementCount();
     }
 

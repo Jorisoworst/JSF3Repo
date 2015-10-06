@@ -28,10 +28,10 @@ public class KochManager /*implements Observer*/ {
         this.koch = new KochFractal();
 //        this.koch.addObserver(this);
         this.edges = new ArrayList<>();
+        this.count = 0;
         this.leftRunnable = new MyRunnable(this, this.koch, "L");
         this.bottomRunnable = new MyRunnable(this, this.koch, "B");
         this.rightRunnable = new MyRunnable(this, this.koch, "R");
-        this.count = 0;
     }
 
     public void changeLevel(int nxt) {
