@@ -17,21 +17,17 @@ public class KochManager /*implements Observer*/ {
 
     private final JSF31KochFractalFX application;
     private final KochFractal koch;
-    private final ArrayList<Edge> edges;
+    private final List<Edge> edges;
     private TimeStamp generationTime;
     private Thread leftThread, bottomThread, rightThread;
-    private final MyRunnable leftRunnable, bottomRunnable, rightRunnable;
     private int count;
 
     public KochManager(JSF31KochFractalFX application) {
         this.application = application;
         this.koch = new KochFractal();
 //        this.koch.addObserver(this);
-        this.edges = new ArrayList<>();
+        this.edges = Collections.synchronizedList(new ArrayList<Edge>());
         this.count = 0;
-        this.leftRunnable = new MyRunnable(this, this.koch, "L");
-        this.bottomRunnable = new MyRunnable(this, this.koch, "B");
-        this.rightRunnable = new MyRunnable(this, this.koch, "R");
     }
 
     public void changeLevel(int nxt) {
@@ -39,12 +35,12 @@ public class KochManager /*implements Observer*/ {
         this.edges.clear();
 
         this.generationTime = new TimeStamp();
-
+        
         this.generationTime.setBegin("Generation Start");
 
-        this.leftThread = new Thread(this.leftRunnable);
-        this.bottomThread = new Thread(this.bottomRunnable);
-        this.rightThread = new Thread(this.rightRunnable);
+        this.leftThread = new Thread(new MyRunnable(this, nxt, "L"));
+        this.bottomThread = new Thread(new MyRunnable(this, nxt, "B"));
+        this.rightThread = new Thread(new MyRunnable(this, nxt, "R"));
 
         this.leftThread.start();
         this.bottomThread.start();
@@ -54,7 +50,7 @@ public class KochManager /*implements Observer*/ {
 //        this.koch.generateBottomEdge();
 //        this.koch.generateRightEdge();
 //        
-//        this.generationTime.setEnd("Einde van de generate methodes");
+//        this.generationTime.setEnd("Generation End");
 //
 //        this.drawEdges();
 //        this.application.setTextCalc(this.generationTime.toString());

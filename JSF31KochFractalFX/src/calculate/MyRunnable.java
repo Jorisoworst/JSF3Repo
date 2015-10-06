@@ -19,9 +19,10 @@ public class MyRunnable implements Runnable, Observer {
     private final String type;
 
     @SuppressWarnings("LeakingThisInConstructor")
-    public MyRunnable(KochManager km, KochFractal kf, String type) {
+    public MyRunnable(KochManager km, int level, String type) {
         this.km = km;
-        this.kf = kf;
+        this.kf = new KochFractal();
+        this.kf.setLevel(level);
         this.type = type;
         this.kf.addObserver(this);
     }
