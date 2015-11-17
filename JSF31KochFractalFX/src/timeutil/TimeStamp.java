@@ -44,7 +44,7 @@ public class TimeStamp {
     /**
      * initialiseer klasse. begin met geen tijdsperiodes.
      */
-    public void init() {
+    private void init() {
         this.curBegin = 0;
         this.curBeginS = null;
         this.list = new LinkedList();
@@ -140,9 +140,11 @@ public class TimeStamp {
 
     /**
      * override van toString methode. Geeft alle tijdsperiode weer.
+     * @return string
      */
+    @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
         for (Period p : this.list) {
             buffer.append(p.toString());
